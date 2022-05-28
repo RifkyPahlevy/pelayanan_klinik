@@ -45,6 +45,12 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-open-lock-24.png"))); // NOI18N
         jLabel3.setText("Password");
 
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
+
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/Bidan Delima.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -210,8 +216,8 @@ public class Login extends javax.swing.JFrame {
                 utama.jLabel14.setEnabled(true);
 //                
                 utama.btnPrksa.setEnabled(false);
-                utama.btnPtgs.setEnabled(false);
-                utama.jLabel10.setEnabled(false);
+                utama.btnPtgs.setEnabled(true);
+                utama.jLabel10.setEnabled(true);
                 utama.jLabel12.setEnabled(false);
 //                
         }else if (hasil.getString("level").equals("Dokter") || hasil.getString("level").equals("Bidan") || hasil.getString("level").equals("Perawat") ) {
@@ -230,8 +236,8 @@ public class Login extends javax.swing.JFrame {
                 utama.jLabel14.setEnabled(false);
 //                
                 utama.btnPrksa.setEnabled(true);
-                utama.btnPtgs.setEnabled(true);
-                utama.jLabel10.setEnabled(true);
+                utama.btnPtgs.setEnabled(false);
+                utama.jLabel10.setEnabled(false);
                 utama.jLabel12.setEnabled(true);
 //                
                 
@@ -253,6 +259,73 @@ public class Login extends javax.swing.JFrame {
        new Petugas().setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_btnLogin1ActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+         MenuUtama utama = new MenuUtama();
+        try {
+            String sql = "SELECT * FROM user where kode = '"+txtUsername.getText()+"' and password = '"+txtPassword.getText()+"'";
+            Statement stat = conn.createStatement();
+                ResultSet hasil = stat.executeQuery(sql);
+                
+               
+            if(hasil.next()){
+                 utama.labelKd.setText(hasil.getString(1));
+                utama.labelNm.setText(hasil.getString(2));
+                utama.labelStatus.setText(hasil.getString(4));
+                
+                
+                if(hasil.getString("level").equals("Admin")){
+                    JOptionPane.showMessageDialog(null, "Berhasil Login");
+                this.setVisible(false);
+                utama.setVisible(true);
+                utama.btnObat.setEnabled(true);
+                utama.jLabel9.setEnabled(true);
+                utama.btnPasien.setEnabled(true);
+                utama.jLabel11.setEnabled(true);
+                utama.btnPay.setEnabled(true);
+                utama.btnReport.setEnabled(true);
+                utama.jLabel13.setEnabled(true);
+                utama.jLabel14.setEnabled(true);
+//                
+                utama.btnPrksa.setEnabled(false);
+                utama.btnPtgs.setEnabled(true);
+                utama.jLabel10.setEnabled(true);
+                utama.jLabel12.setEnabled(false);
+//                
+        }else if (hasil.getString("level").equals("Dokter") || hasil.getString("level").equals("Bidan") || hasil.getString("level").equals("Perawat") ) {
+                    JOptionPane.showMessageDialog(null, "Berhasil Login");
+                this.setVisible(false);
+                utama.setVisible(true);
+                //6 4,10, 12
+                //1,9,5,11,7,8,13,14
+                utama.btnObat.setEnabled(false);
+                utama.jLabel9.setEnabled(false);
+                utama.btnPasien.setEnabled(false);
+                utama.jLabel11.setEnabled(false);
+                utama.btnPay.setEnabled(false);
+                utama.btnReport.setEnabled(false);
+                utama.jLabel13.setEnabled(false);
+                utama.jLabel14.setEnabled(false);
+//                
+                utama.btnPrksa.setEnabled(true);
+                utama.btnPtgs.setEnabled(false);
+                utama.jLabel10.setEnabled(false);
+                utama.jLabel12.setEnabled(true);
+//                
+                
+                
+                }
+                
+                
+            }else{
+                 JOptionPane.showMessageDialog(null, "Gagal Login ");
+            }
+         }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        setVisible(false);
+    }//GEN-LAST:event_txtPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,7 +365,7 @@ public class Login extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
+    public javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogin1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

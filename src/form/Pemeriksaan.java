@@ -1,5 +1,8 @@
 package form;
 
+import static form.Pasien.labelKd;
+import static form.Pasien.labelNm;
+import static form.Pasien.labelStatus;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -15,7 +18,7 @@ public class Pemeriksaan extends javax.swing.JFrame {
     private Connection conn = new Koneksi().connect();
     private DefaultTableModel table;
     public String noPasien, namaPasien, namaPtgs, profesi, kdObat, nmObat, kdPtgs, hargaObat;
-    
+    public static String labelKd, labelNm, labelStatus ;
     public Pemeriksaan() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -488,8 +491,12 @@ public class Pemeriksaan extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
+       MenuUtama utama =  new MenuUtama();
+        utama.labelKd.setText(labelKd);
+        utama.labelNm.setText(labelNm);
+        utama.labelStatus.setText(labelStatus);
+        utama.setVisible(true);
         this.setVisible(false);
-        new MenuUtama().setVisible(true);
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void txtProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProfActionPerformed
@@ -518,10 +525,10 @@ public class Pemeriksaan extends javax.swing.JFrame {
             stat.setString(4, txtDiagnosa.getText());
             stat.setString(5, txtNmobat.getText());
             stat.setString(6, txtKet.getText());
-            stat.setString(7, "sudah diperiksa");
+            stat.setString(7, "belum bayar");
 
             stat.executeUpdate();
-            JOptionPane.showMessageDialog(null, "data berhasil diubah");
+            JOptionPane.showMessageDialog(null, "data berhasil dikirim");
             kosong();
             txtNorekam.requestFocus();
         } catch (SQLException e) {

@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 
 public class Pasien extends javax.swing.JFrame {
-    String autoNum;
+   public static String autoNum, labelKd, labelNm, labelStatus ;
     private Connection conn = new Koneksi().connect();
     private DefaultTableModel table;
 LocalDate now = LocalDate.now();
@@ -558,7 +558,11 @@ LocalDate now = LocalDate.now();
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
-        new MenuUtama().setVisible(true);
+        MenuUtama utama =  new MenuUtama();
+        utama.labelKd.setText(labelKd);
+        utama.labelNm.setText(labelNm);
+        utama.labelStatus.setText(labelStatus);
+        utama.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton13ActionPerformed
 

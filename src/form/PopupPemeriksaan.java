@@ -28,7 +28,7 @@ public class PopupPemeriksaan extends javax.swing.JFrame {
        
         
         try {
-            String sql = "SELECT * FROM pemeriksaan where status like '%" + "sudah diperiksa" + "%' order by tgl_prksa asc";
+            String sql = "SELECT * FROM pemeriksaan where status like '%" + "belum bayar" + "%' order by tgl_prksa asc";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while (hasil.next()) {
@@ -70,7 +70,7 @@ public class PopupPemeriksaan extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Data Pemeriksaan");
+        jLabel1.setText("Antrian Pembayaran");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -127,10 +127,10 @@ public class PopupPemeriksaan extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(298, 298, 298)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(253, 253, 253))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

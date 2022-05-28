@@ -5,6 +5,9 @@
  */
 package form;
 
+import static form.Pasien.labelKd;
+import static form.Pasien.labelNm;
+import static form.Pasien.labelStatus;
 import java.awt.event.KeyEvent;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -15,7 +18,8 @@ public class Obat extends javax.swing.JFrame {
 
     private Connection conn = new Koneksi().connect();
     private DefaultTableModel table;
-
+    public static String labelKd, labelNm, labelStatus ;
+    
     public Obat() {
 
         initComponents();
@@ -411,7 +415,11 @@ public class Obat extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
-        new MenuUtama().setVisible(true);
+        MenuUtama utama =  new MenuUtama();
+        utama.labelKd.setText(labelKd);
+        utama.labelNm.setText(labelNm);
+        utama.labelStatus.setText(labelStatus);
+        utama.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton13ActionPerformed
 

@@ -297,19 +297,32 @@ public class MenuUtama extends javax.swing.JFrame {
     private void btnObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObatActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new Obat().setVisible(true);
+        
+        Obat obat = new Obat();
+        obat.labelKd = labelKd.getText();
+        obat.labelNm = labelNm.getText();
+        obat.labelStatus = labelStatus.getText();
+        obat.setVisible(true);
     }//GEN-LAST:event_btnObatActionPerformed
 
     private void btnPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasienActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new Pasien().setVisible(true);
+        Pasien pasien = new Pasien();
+        pasien.labelKd = labelKd.getText();
+        pasien.labelNm = labelNm.getText();
+        pasien.labelStatus = labelStatus.getText();
+        pasien.setVisible(true);
+
     }//GEN-LAST:event_btnPasienActionPerformed
 
     private void btnPtgsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPtgsActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
-        new Petugas().setVisible(true);
+       Petugas petugas = new Petugas();
+        petugas.labelKd = labelKd.getText();
+        petugas.labelNm = labelNm.getText();
+        petugas.labelStatus = labelStatus.getText();
+        petugas.setVisible(true);
     }//GEN-LAST:event_btnPtgsActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
@@ -327,8 +340,11 @@ public class MenuUtama extends javax.swing.JFrame {
     private void btnPrksaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrksaActionPerformed
         // TODO add your handling code here:
         
-        this.setVisible(false);
-        new Pemeriksaan().setVisible(true);
+        Pemeriksaan periksa = new Pemeriksaan();
+        periksa.labelKd = labelKd.getText();
+        periksa.labelNm = labelNm.getText();
+        periksa.labelStatus = labelStatus.getText();
+        periksa.setVisible(true);
     }//GEN-LAST:event_btnPrksaActionPerformed
 
     /**

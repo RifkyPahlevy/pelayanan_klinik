@@ -5,15 +5,14 @@
         <group>
             <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/Pasien.java</file>
             <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/Login.java</file>
-            <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/laporan/pasien.jrxml</file>
+            <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/PopupPasien.java</file>
             <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/Petugas.java</file>
             <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/Pemeriksaan.java</file>
-            <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/laporan/pemeriksaan.jrxml</file>
-            <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/laporan/petugas.jrxml</file>
-            <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/laporan/obat.jrxml</file>
             <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/Pembayaran.java</file>
             <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/Obat.java</file>
             <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/PopupPemeriksaan.java</file>
+            <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/MenuUtama.java</file>
+            <file>file:/C:/Users/rifky/OneDrive/Desktop/NetBeansProjects/pelayanan_klinik/src/form/PopupObat.java</file>
         </group>
     </open-files>
 </project-private>

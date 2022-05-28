@@ -540,8 +540,12 @@ public class Pembayaran extends javax.swing.JFrame {
             stat.setString(11, txtByr.getText());
             stat.executeUpdate();
 
+            String sql1 = "update pemeriksaan set status=? where no_rekam='" + txtNorek.getText() + "'";
+            PreparedStatement stat1 = conn.prepareStatement(sql1);
+            stat1.setString(1, "sudah bayar");
+            stat1.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "data berhasil ditambah");
+            JOptionPane.showMessageDialog(null, "Pembayaran sukses");
             table.addRow(new Object[]{
                 txtId.getText(),
                 txtNorek.getText(),
@@ -556,7 +560,7 @@ public class Pembayaran extends javax.swing.JFrame {
             kosong();
             txtId.requestFocus();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "data gagal ditambah" + e);
+            JOptionPane.showMessageDialog(null, "Pembayaran gagal" + e);
             e.printStackTrace();
         }
 
@@ -565,6 +569,7 @@ public class Pembayaran extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
