@@ -256,7 +256,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
         // TODO add your handling code here:
-       new Petugas().setVisible(true);
+       new Petugas(null,null,null).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
@@ -309,7 +309,7 @@ public class Login extends javax.swing.JFrame {
                 utama.jLabel14.setEnabled(false);
 //                
                 utama.btnPrksa.setEnabled(true);
-                utama.btnPtgs.setEnabled(false);
+                utama.btnPtgs.setEnabled(true);
                 utama.jLabel10.setEnabled(false);
                 utama.jLabel12.setEnabled(true);
 //                

@@ -25,6 +25,7 @@ public class Pemeriksaan extends javax.swing.JFrame {
         kosong();
         txtNmobat.setText(" 1.\n 2.\n 3.\n 4.");
         setLocationRelativeTo(getRootPane());
+        
        // autonumber();
         datatable();
     }
@@ -32,7 +33,7 @@ public class Pemeriksaan extends javax.swing.JFrame {
     protected void datatable() {
         Object[] col = {"No Rekam", "Tanggal", "No Pasien", "Nama Pasien", "Kode Petugas", "Nama Petugas", "Diagnosa", "Obat", "Keterangan"};
         table = new DefaultTableModel(null, col);
-       
+        
         
         try {
             String sql = "SELECT * FROM pemeriksaan where status like '%" + "belum diperiksa" + "%' order by tgl_prksa asc";
@@ -492,6 +493,7 @@ public class Pemeriksaan extends javax.swing.JFrame {
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
        MenuUtama utama =  new MenuUtama();
+        
         utama.labelKd.setText(labelKd);
         utama.labelNm.setText(labelNm);
         utama.labelStatus.setText(labelStatus);

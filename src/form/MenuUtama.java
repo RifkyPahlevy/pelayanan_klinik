@@ -292,6 +292,7 @@ public class MenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setVisible(false);
         new Login().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void btnObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObatActionPerformed
@@ -303,6 +304,7 @@ public class MenuUtama extends javax.swing.JFrame {
         obat.labelNm = labelNm.getText();
         obat.labelStatus = labelStatus.getText();
         obat.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnObatActionPerformed
 
     private void btnPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasienActionPerformed
@@ -313,16 +315,17 @@ public class MenuUtama extends javax.swing.JFrame {
         pasien.labelNm = labelNm.getText();
         pasien.labelStatus = labelStatus.getText();
         pasien.setVisible(true);
-
+        this.dispose();
+        
+        
     }//GEN-LAST:event_btnPasienActionPerformed
 
     private void btnPtgsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPtgsActionPerformed
         // TODO add your handling code here:
-       Petugas petugas = new Petugas();
-        petugas.labelKd = labelKd.getText();
-        petugas.labelNm = labelNm.getText();
-        petugas.labelStatus = labelStatus.getText();
+       Petugas petugas = new Petugas(labelKd.getText(),labelNm.getText(),labelStatus.getText());
+       
         petugas.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnPtgsActionPerformed
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
@@ -333,7 +336,7 @@ public class MenuUtama extends javax.swing.JFrame {
         bayar.labelNm.setText(labelNm.getText());
         
         
-        this.setVisible(false);
+        this.dispose();
         bayar.setVisible(true);
     }//GEN-LAST:event_btnPayActionPerformed
 
@@ -345,6 +348,7 @@ public class MenuUtama extends javax.swing.JFrame {
         periksa.labelNm = labelNm.getText();
         periksa.labelStatus = labelStatus.getText();
         periksa.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnPrksaActionPerformed
 
     /**

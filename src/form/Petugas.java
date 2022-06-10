@@ -17,12 +17,24 @@ public class Petugas extends javax.swing.JFrame {
     private DefaultTableModel table;
     public static String labelKd, labelNm, labelStatus ;
 
-    public Petugas() {
+    public Petugas(String kode, String nama, String status) {
         initComponents();
+        
+        this.labelKd = kode;
+        this.labelNm = nama;
+        this.labelStatus = status;
+        
+        
         this.setLocationRelativeTo(null);
         kosong();
         aktif();
-        datatable();
+        if (labelKd != null) {
+            btnTambah.setVisible(false);
+                        btnEdit.setVisible(false);
+                         
+            isiField();
+        }
+       // datatable();
         setLocationRelativeTo(getRootPane());
         autonumber();
     }
@@ -30,7 +42,37 @@ public class Petugas extends javax.swing.JFrame {
     protected void aktif() {
         txtKdPtgs.requestFocus();;
     }
+  public void isiField(){
+       
+        try {
+           String sql  = "SELECT * FROM petugas where kd_ptgs like '%"+labelKd+"%' order by kd_ptgs asc";
+        Statement stat = conn.createStatement();
+                ResultSet hasil = stat.executeQuery(sql);
+            if (hasil.next()) {
+                txtKdPtgs.setText(hasil.getString(1));
+        txtNmptgs.setText(hasil.getString(2));
+         if ("Laki-Laki".equals(hasil.getString(3))) {
+        rbLaki.setSelected(true);
+        } else{
+        rbPerempuan.setSelected(true);
+        }
+        txtNotlp.setText(hasil.getString(4));
+                
+        cbProf.setSelectedItem(5);
+                txtEmail.setText(hasil.getString(6));
 
+        txtPass.setText(hasil.getString(7));
+        txtAlamat.setText(hasil.getString(8));
+
+        
+            }
+        
+        } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "data gagal dipanggil"+e);
+    e.printStackTrace();
+        }
+        
+    }
     protected void kosong() {
         txtKdPtgs.setText("");
         txtNmptgs.setText("");
@@ -71,32 +113,33 @@ public class Petugas extends javax.swing.JFrame {
 
         }
     }
-
-    protected void datatable() {
-        Object[] col = {"Kode Petugas", "Nama Petugas", "Jenis Kelamin", "No Telepon", "Profesi", "Email", "Alamat"};
-        table = new DefaultTableModel(null, col);
-        String cariitem = txtCari.getText();
-        try {
-            String sql = "SELECT kd_ptgs,nama_ptgs,j_kelamin,no_tlp,profesi,email,alamat FROM petugas where kd_ptgs like '%" + cariitem + "%' or nama_ptgs like '%" + cariitem + "%' order by kd_ptgs asc";
-            Statement stat = conn.createStatement();
-            ResultSet hasil = stat.executeQuery(sql);
-            while (hasil.next()) {
-                table.addRow(new Object[]{
-                    hasil.getString(1),
-                    hasil.getString(2),
-                    hasil.getString(3),
-                    hasil.getString(4),
-                    hasil.getString(5),
-                    hasil.getString(6),
-                    hasil.getString(7),}
-                );
-            }
-            tblPetugas.setModel(table);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "data gagal dipanggil" + e);
-            e.printStackTrace();
-        }
-    }
+    
+//
+//    protected void datatable() {
+//        Object[] col = {"Kode Petugas", "Nama Petugas", "Jenis Kelamin", "No Telepon", "Profesi", "Email", "Alamat"};
+//        table = new DefaultTableModel(null, col);
+//        String cariitem = txtCari.getText();
+//        try {
+//            String sql = "SELECT kd_ptgs,nama_ptgs,j_kelamin,no_tlp,profesi,email,alamat FROM petugas where kd_ptgs like '%" + labelKd + "%'";
+//            Statement stat = conn.createStatement();
+//            ResultSet hasil = stat.executeQuery(sql);
+//            while (hasil.next()) {
+//                table.addRow(new Object[]{
+//                    hasil.getString(1),
+//                    hasil.getString(2),
+//                    hasil.getString(3),
+//                    hasil.getString(4),
+//                    hasil.getString(5),
+//                    hasil.getString(6),
+//                    hasil.getString(7),}
+//                );
+//            }
+//            
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, "data gagal dipanggil" + e);
+//            e.printStackTrace();
+//        }
+//    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -121,16 +164,16 @@ public class Petugas extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblPetugas = new javax.swing.JTable();
-        txtCari = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnTambah = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         txtPass = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -196,48 +239,24 @@ public class Petugas extends javax.swing.JFrame {
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-mail-24.png"))); // NOI18N
         jLabel10.setText("Email");
 
-        tblPetugas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblPetugas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblPetugasMouseClicked(evt);
-            }
-        });
-        jScrollPane3.setViewportView(tblPetugas);
-
-        txtCari.addActionListener(new java.awt.event.ActionListener() {
+        btnTambah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-add-24.png"))); // NOI18N
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCariActionPerformed(evt);
+                btnTambahActionPerformed(evt);
             }
         });
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-add-24.png"))); // NOI18N
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-edit-file-24.png"))); // NOI18N
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-edit-file-24.png"))); // NOI18N
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btnHapus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-delete-24.png"))); // NOI18N
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-delete-24.png"))); // NOI18N
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnHapusActionPerformed(evt);
             }
         });
 
@@ -248,14 +267,20 @@ public class Petugas extends javax.swing.JFrame {
             }
         });
 
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-search-24.png"))); // NOI18N
-
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gambar/icons8-logout-24.png"))); // NOI18N
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton13ActionPerformed(evt);
             }
         });
+
+        jLabel1.setText("Daftar");
+
+        jLabel11.setText("Hapus");
+
+        jLabel12.setText("Edit");
+
+        jLabel13.setText("Batal");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -264,49 +289,58 @@ public class Petugas extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
+                        .addContainerGap(692, Short.MAX_VALUE)
+                        .addComponent(jButton13))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel9))
-                        .addGap(64, 64, 64)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNmptgs, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(rbLaki)
+                                .addGap(173, 173, 173)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel9))
+                                .addGap(64, 64, 64)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNmptgs, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(rbLaki)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(rbPerempuan))
+                                    .addComponent(cbProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNotlp, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtKdPtgs, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(220, 220, 220)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnTambah)
+                                    .addComponent(jLabel1))
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnEdit)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel12)))
                                 .addGap(18, 18, 18)
-                                .addComponent(rbPerempuan))
-                            .addComponent(cbProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNotlp, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtKdPtgs, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton13))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jButton6)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton9)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton10)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
-                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jButton12)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnHapus)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel11)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel13))
+                                    .addComponent(jButton11))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -347,27 +381,21 @@ public class Petugas extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel9)))
+                .addGap(61, 61, 61)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(btnHapus))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jButton10))
-                        .addGap(40, 40, 40)))
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton13)
+                    .addComponent(jButton13)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel11)
+                        .addComponent(jLabel12)
+                        .addComponent(jLabel13)))
                 .addGap(133, 133, 133))
         );
 
@@ -405,7 +433,7 @@ public class Petugas extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -417,15 +445,11 @@ public class Petugas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtKdPtgsActionPerformed
 
-    private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCariActionPerformed
-
     private void txtNmptgsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNmptgsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNmptgsActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
         String jenis = null;
         if (rbLaki.isSelected()) {
@@ -456,18 +480,18 @@ public class Petugas extends javax.swing.JFrame {
 
             stat2.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "data berhasil ditambah");
+            JOptionPane.showMessageDialog(null, "data berhasil didaftarkan\nSilahkan Login kembali");
 
             kosong();
             txtKdPtgs.requestFocus();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "data gagal ditambah" + e);
+            JOptionPane.showMessageDialog(null, "data gagal didaftarkan" + e);
             e.printStackTrace();
             // TODO add your handling code here:
         }
-        datatable();
+//        datatable();
         autonumber();
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnTambahActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
@@ -479,7 +503,7 @@ public class Petugas extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton13ActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
         int ok = JOptionPane.showConfirmDialog(null, "hapus", "Konfirmasi Dialog", JOptionPane.YES_NO_OPTION);
         if (ok == 0) {
@@ -493,11 +517,11 @@ public class Petugas extends javax.swing.JFrame {
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "data gagal dihapus" + e);
             }
-            datatable();
+//            datatable();
         }
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnHapusActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
         String jenis = null;
         if (rbLaki.isSelected()) {
@@ -506,7 +530,7 @@ public class Petugas extends javax.swing.JFrame {
             jenis = "Perempuan";
         }
         try {
-            String sql = "update petugas set nama_ptgs=?,j_kelamin=?,no_tlp = ?, profesi=?,email=?,alamat=?,password=? where kd_ptgs='" + txtKdPtgs.getText() + "'";
+            String sql = "update petugas set nama_ptgs=?,j_kelamin=?,no_tlp = ?, profesi=?,email=?,alamat=?,password=? where kd_ptgs='" + labelKd + "'";
             PreparedStatement stat = conn.prepareStatement(sql);
             stat.setString(1, txtNmptgs.getText());
             stat.setString(2, jenis);
@@ -516,6 +540,17 @@ public class Petugas extends javax.swing.JFrame {
             stat.setString(6, txtAlamat.getText());
             stat.setString(7, txtPass.getText());
             stat.executeUpdate();
+         
+            String sql2 = "update user set nama=?,password=? where kode ='"+labelKd+"'";
+
+              PreparedStatement stat2 = conn.prepareStatement(sql2);
+            
+            stat2.setString(1, txtNmptgs.getText());
+            
+            stat2.setString(2, txtPass.getText());
+            
+            
+            stat2.executeUpdate();
             JOptionPane.showMessageDialog(null, "data berhasil diubah");
             kosong();
             txtKdPtgs.requestFocus();
@@ -523,40 +558,14 @@ public class Petugas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "data gagal diubah" + e);
             e.printStackTrace();
         }
-        datatable();
-    }//GEN-LAST:event_jButton9ActionPerformed
+       // datatable();
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
         kosong();
-        datatable();
+        //datatable();
     }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void tblPetugasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPetugasMouseClicked
-        // TODO add your handling code here:
-        int bar = tblPetugas.getSelectedRow();
-        String a = table.getValueAt(bar, 0).toString();
-        String b = table.getValueAt(bar, 1).toString();
-        String c = table.getValueAt(bar, 2).toString();
-        String d = table.getValueAt(bar, 3).toString();
-        String e = table.getValueAt(bar, 4).toString();
-        String f = table.getValueAt(bar, 5).toString();
-        String g = table.getValueAt(bar, 6).toString();
-
-        txtKdPtgs.setText(a);
-        txtNmptgs.setText(b);
-        if ("Laki-Laki".equals(c)) {
-            rbLaki.setSelected(true);
-        } else {
-            rbPerempuan.setSelected(true);
-        };
-        cbProf.setSelectedItem(d);
-        txtNotlp.setText(e);
-        txtEmail.setText(f);
-
-        txtAlamat.setText(g);
-
-    }//GEN-LAST:event_tblPetugasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -565,21 +574,24 @@ public class Petugas extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Petugas().setVisible(true);
+                new Petugas(null,null,null).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnTambah;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cbProf;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -591,12 +603,9 @@ public class Petugas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JRadioButton rbLaki;
     private javax.swing.JRadioButton rbPerempuan;
-    private javax.swing.JTable tblPetugas;
     private javax.swing.JTextArea txtAlamat;
-    private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtKdPtgs;
     private javax.swing.JTextField txtNmptgs;
